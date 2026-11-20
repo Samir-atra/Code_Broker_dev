@@ -20,7 +20,12 @@ Demo Video: [YouTube Link](https://youtu.be/AzqChmFs0oM)
 - 🤖 **5-Agent System**: Parallel processing with specialized AI agents
 - 📝 **Beautiful Reports**: Markdown and HTML formatted assessment reports
 - ⚡ **Fast & Reliable**: Async processing with retry mechanisms
-- 🎨 **Pylint Integration**: Automated Python code quality analysis
+- 🛠️ **Deterministic Tool Grounding**:
+  - **Pylint**: Automated PEP 8 and Python code quality analysis
+  - **Bandit**: AST static application security testing (SAST) and CWE vulnerability detection
+  - **Radon**: Quantitative Cyclomatic Complexity (CC) and Maintainability Index (MI) metrics
+  - **BugsInPy**: Automated test coverage assessment and fault localization benchmark suites
+- 🧪 **Full Test Coverage**: Comprehensive 39-test unit suite across tools, agents, and evaluation modules
 
 ## 🚀 Quick Start
 
@@ -33,8 +38,11 @@ pip install -r requirements.txt
 # Configure environment (add your GOOGLE_API_KEY and GITHUB_TOKEN)
 cp .env.example .env
 
+# Run unit tests
+PYTHONPATH=. pytest tests/
+
 # Run the notebook
-jupyter notebook notebooks/code_broker.ipynb
+jupyter notebook notebooks/code_broker_documented.ipynb
 ```
 
 ## 📂 Project Structure
@@ -42,14 +50,18 @@ jupyter notebook notebooks/code_broker.ipynb
 ```
 agents_intensive_dev/
 ├── notebooks/
-│   |── code_broker.ipynb          # Main executable notebook
-|   └──  report evaluator.ipynb     # Evaluator notebook
-├── reports/                        # Generated assessment reports
-├── src/                            # Source code modules
-├── Docs/                           # Documentation
-├── KAGGLE_WRITEUP.md              # Detailed competition writeup
-├── requirements.txt                # Python dependencies
-└── README.md                       # This file
+│   ├── code_broker_documented.ipynb          # Main executable multi-agent assessment notebook
+│   └── code_broker_report_evaluator.ipynb    # Grounded LLM-as-a-judge meta-evaluator notebook
+├── reports/                                  # Generated assessment and tool diagnostic reports
+├── src/                                      # Source code modules
+│   ├── llm_adk_agent_module.py               # Standalone ADK agent entrypoint
+│   └── tools/                                # Analysis tools (lint, security, complexity, git)
+├── tests/                                    # Comprehensive unit test suite (39 tests)
+├── docs/                                     # Documentation and changelog notes
+├── research/                                 # Academic paper submissions & LaTeX manuscripts
+├── KAGGLE_WRITEUP.md                         # Detailed competition writeup
+├── requirements.txt                          # Python dependencies
+└── README.md                                 # This file
 ```
 
 ## 🏗️ Architecture
@@ -76,7 +88,11 @@ https://www.kaggle.com/competitions/agents-intensive-capstone-project
 
 ## 👨‍💻 Author
 
-**Samer Atra** - [GitHub](https://github.com/Samir-atra)
+**Samer Attrah**
+- **GitHub**: [Samir-atra](http://github.com/Samir-atra)
+- **Kaggle**: [samerattrah](https://www.kaggle.com/samerattrah)
+- **ORCID**: [0009-0006-8090-1256](https://orcid.org/0009-0006-8090-1256)
+- **AgentBeats**: [Samir-atra](https://agentbeats.dev/Samir-atra)
 
 ## 📄 License
 

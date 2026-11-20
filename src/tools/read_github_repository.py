@@ -3,7 +3,10 @@ import re
 import shutil
 import tempfile
 import asyncio
-from tools.read_files import read_directory_files
+try:
+    from tools.read_files import read_directory_files
+except ImportError:
+    from src.tools.read_files import read_directory_files
 
 
 

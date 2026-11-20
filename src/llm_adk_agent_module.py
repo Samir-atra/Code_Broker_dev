@@ -6,9 +6,20 @@ from google.adk.tools import FunctionTool
 from google.adk.tools.mcp_tool.mcp_session_manager import StreamableHTTPServerParams
 from google.adk.tools.mcp_tool.mcp_toolset import MCPToolset
 import asyncio
-from tools.read_files import read_file, read_directory_files
-from tools.read_github_repository import read_github_repository, cleanup_temp_directory
-from tools.lint_code import get_linting_score
+try:
+    from tools.read_files import read_file, read_directory_files
+    from tools.read_github_repository import read_github_repository, cleanup_temp_directory
+    from tools.lint_code import get_linting_score
+    from tools.security_scan import get_security_score
+    from tools.complexity_metrics import get_complexity_score
+    from tools.bugsinpy_tool import get_test_score
+except ImportError:
+    from src.tools.read_files import read_file, read_directory_files
+    from src.tools.read_github_repository import read_github_repository, cleanup_temp_directory
+    from src.tools.lint_code import get_linting_score
+    from src.tools.security_scan import get_security_score
+    from src.tools.complexity_metrics import get_complexity_score
+    from src.tools.bugsinpy_tool import get_test_score
 
 
 async def initialize_adk_model():
@@ -16,12 +27,13 @@ async def initialize_adk_model():
     load_dotenv()  # Load environment variables from .env file
     api_key = os.getenv("GOOGLE_API_KEY")
     github_token = os.getenv("GITHUB_TOKEN")
-    os.environ["GOOGLE_API_KEY"] = api_key  # This keeps the compatibility with how ADK might expect the API key internally
-    os.environ["GITHUB_TOKEN"] = github_token
     if not api_key:
         raise ValueError("GEMINI_API_KEY environment variable not set.")
     if not github_token:
         raise ValueError("GITHUB_TOKEN environment variable not set.")
+
+    os.environ["GOOGLE_API_KEY"] = api_key  # This keeps the compatibility with how ADK might expect the API key internally
+    os.environ["GITHUB_TOKEN"] = github_token
 
 
     # Assuming Gemini model can be initialized directly with an API key or it's handled internally by ADK
@@ -43,6 +55,9 @@ async def initialize_adk_model():
             FunctionTool(read_directory_files),
             FunctionTool(read_github_repository),
             FunctionTool(get_linting_score),
+            FunctionTool(get_security_score),
+            FunctionTool(get_complexity_score),
+            FunctionTool(get_test_score),
             FunctionTool(cleanup_temp_directory),
         ],
     )
